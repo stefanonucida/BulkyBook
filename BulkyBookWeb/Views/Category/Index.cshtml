@@ -1,0 +1,55 @@
+﻿@*
+    Attenzione @model va scritto piccolo
+*@
+@model IEnumerable<Category>
+@{
+    ViewData["Title"] = "Index";
+}
+
+<div class="container p-3">
+    <div class="row pt-4">
+        <div class="col-6">
+            <h2 class="text-primary">Lista Categorie</h2>
+        </div>
+        <div class="col-6 text-end">
+            <a class="btn btn-primary" asp-controller="Category" asp-action="Create">
+                <i class="bi bi-plus-circle"></i> Aggiungi Categoria
+            </a>
+        </div>
+    </div>
+</div>
+<br />
+
+<table class="table table-bordered table-striped" width="80%">
+    <thead>
+        <tr>
+            <th>
+                Nome
+            </th>
+            <th>
+                Ordine
+            </th>
+            <th>
+                Data Creazione
+            </th>
+        </tr>
+    </thead>
+
+    <tbody>
+        @foreach(var categoria in Model!)
+        {
+            <tr>
+                <td width="50%">
+                    @categoria.Name
+                </td>
+                <td width="15%">
+                    @categoria.DisplayOrder
+                </td>
+                <td width="35%">
+                    @categoria.CreatedDateTime.ToString("dd/MM/yyyy")
+                </td>
+            </tr>
+        }
+    </tbody>
+
+</table>

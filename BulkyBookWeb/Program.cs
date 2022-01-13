@@ -2,11 +2,22 @@
 //crea un istanza del builder che creerà la nostra app. 
 //args è una lista di stringhe opzionali passate al programma dal comando dotnet 
 //questi args saranno poi usati per la configurazione dell'applicazione
+using BulkyBookWeb.Data;
+using Microsoft.EntityFrameworkCore;
+
 var builder = WebApplication.CreateBuilder(args);
 
 // qui registriamo nel motore DI tutte le dipendenze del progetto.
 builder.Services.AddControllersWithViews();
-builder.Services.AddRazorPages(); 
+builder.Services.AddRazorPages();
+
+//registrazione nel motore DI di un db
+builder.Services.AddDbContext<ApplicationDbContext>(optionsAction: options => 
+//dopo aver installato il pacchetto nuget per lavorare con sql avremo il metodo UseSqlServer
+options.UseSqlServer(
+    //Recuperiamo la stringa di connessione da appsettings.json. Attenzione qui viene fatto l'accesso diretto alla chiave "DefaultConnection"
+    //del blocco "ConnectionString", un blocco di default
+    builder.Configuration.GetConnectionString("DefaultConnection") ));
 
 
 //nb tutte le dipendendenze (es db, librerie particolari etc) vanno registrate PRIMA DI LANCIARE IL builder.Build().
